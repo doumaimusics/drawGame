@@ -1,0 +1,611 @@
+body,
+div,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+label,
+input,
+i,
+ul,
+li,
+dl,
+dt,
+dd,
+ol,
+select,
+option,
+table,
+tr,
+td,
+tt,
+th,
+tbody,
+strong,
+textarea,
+section {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'PingFangSC-Regular', 'Arial', '微软雅黑';
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+img {
+    border: none;
+}
+
+i,
+em {
+    font-style: normal;
+}
+
+//左边框
+.border-l:after {
+    width: 1px;
+    height: 100%;
+    content: '';
+    border-left: 1px solid #FF8B54;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: scaleX(0.5);
+    -webkit-transform: scaleX(0.5);
+    z-index: 1;
+}
+
+//上边框
+.border-t:after {
+    width: 100%;
+    height: 1px;
+    content: '';
+    border-top: 1px solid #ff8b54;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scaleY(0.5);
+    -webkit-transform: scaleY(0.5);
+    z-index: 1;
+}
+
+//右边框
+.border-r:after {
+    width: 1px;
+    height: 100%;
+    content: '';
+    border-right: 1px solid #FF8B54;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: scaleX(0.5);
+    -webkit-transform: scaleX(0.5);
+    z-index: 1;
+}
+
+//下边框
+.border-b {
+    width: 100%;
+    height: 1px;
+    content: '';
+    border-bottom: 1px solid #FF8B54;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transform: scaleY(0.5);
+    -webkit-transform: scaleY(0.5);
+}
+
+%clearfix {
+    content: ' ';
+    display: block;
+    height: '0';
+    clear: both;
+}
+
+.clearfix:after {
+    @extend %clearfix;
+}
+
+@mixin zuoyou {
+    //左右居中定位
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+@mixin shangxia {
+    //上下居中定位
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+@mixin zhong {
+    //正中间定位
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+@mixin gai {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: auto;
+}
+
+@mixin fixed {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+@mixin userem($size) {
+    $list: 2048px, 1920px, 1600px, 1400px, 1242px, 1140px, 1280px, 1024px, 1080px, 960px, 800px, 768px, 736px, 732px, 720px, 667px, 640px, 600px, 568px, 540px, 533px, 480px, 435px, 414px, 412px, 400px, 385px, 384px, 375px, 360px, 320px, 300px, 240px;
+    @each $i in $list {
+        @media screen and (max-width:#{$i}) {
+            html {
+                font-size: 100px * ($i/$size);
+            }
+        }
+    }
+}
+
+@include userem(750px);
+//页面结构样式
+.main_box {
+    width: 100%;
+    height: 40rem;
+    background: url(../../../wx/images/spellFragmentsActivity/bg.jpg?v=1.2) no-repeat center top;
+    background-size: cover;
+    .main_top {
+        height: .92rem;
+        background: #FF5241;
+        margin-bottom: .1rem;
+        overflow: hidden;
+        li {
+            width: 33.33%;
+            height: .92rem;
+            float: left;
+            position: relative;
+            text-align: center;
+            font-size: .26rem;
+            color: #fff;
+            padding-top: .15rem;
+            border-bottom: .04rem solid #A40B29;
+        }
+        li.activeColor {
+            background: #ffea75;
+            border-bottom: .04rem solid #cbb224;
+            p {
+                color: #FF5241;
+            }
+        }
+    }
+    .title_img {
+        height: 2.42rem;
+        background: url(../../../wx/images/spellFragmentsActivity/title.gif?v=1.1) no-repeat;
+        background-size: cover;
+        overflow: hidden;
+        margin-bottom: 5.3rem;
+    }
+    .draw_box {
+        width: 7.1rem;
+        height: 8.57rem;
+        margin: 0 auto;
+        background: url(../../../wx/images/spellFragmentsActivity/yx_box.png?v=1.1) no-repeat;
+        background-size: cover;
+        margin-bottom: .34rem;
+        padding: .4rem .4rem;
+    }
+    .data_box {
+        width: 7.1rem;
+        height: 1.47rem;
+        background: url(../../../wx/images/spellFragmentsActivity/data_box.png?v=1.1) no-repeat;
+        margin: 0 auto;
+        background-size: cover;
+        margin-bottom: .18rem;
+        padding: .1rem;
+    }
+    .hint_box {
+        margin-bottom: .7rem;
+        font-size: .24rem;
+        color: #fff;
+        text-align: center;
+    }
+    .spell_box {
+        padding: 0 .5rem;
+    }
+    .rule_box {
+        overflow: hidden;
+        margin-top: .5rem;
+        background: url(../../../wx/images/spellFragmentsActivity/title_nav.png) no-repeat;
+        background-size: 6.65rem 0.25rem;
+        background-position: center top;
+        padding: .5rem .5rem 0 .4rem;
+        font-size: .24rem;
+        line-height: .44rem;
+        color: #fff;
+        p {
+            margin-bottom: .3rem;
+        }
+    }
+    //弹框样式
+    .pop_up_box {
+        width: 5.3rem;
+        height: 5.47rem;
+        @include fixed;
+        background: url(../../../wx/images/spellFragmentsActivity/popUp.png) no-repeat;
+        background-size: cover;
+        z-index: 15;
+        overflow: hidden;
+        display: none;
+        .close_btn {
+            width: .6rem;
+            height: .66rem;
+            position: absolute;
+            right: .3rem;
+            top: 0;
+        }
+        .pop_img {
+            width: 1rem;
+            height: 1.24rem;
+            background: #333;
+            margin: 1rem auto 1rem auto;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        p {
+            font-size: .28rem;
+            color: #e83131;
+            text-align: center;
+            margin-bottom: .5rem;
+        }
+        .pop_btn {
+            width: 3.89rem;
+            height: .91rem;
+            background: url(../../../wx/images/spellFragmentsActivity/popBtn.png) no-repeat;
+            background-size: cover;
+            margin: 0 auto;
+        }
+    }
+    //遮罩样式
+    .mark_box {
+        @include fixed;
+        background: rgba(0, 0, 0, .5);
+        z-index: 14;
+        display: none;
+    }
+}
+
+//九宫格部分样式
+.draw_box {
+    ul {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        li {
+            width: 2rem;
+            height: 2.48rem;
+            float: left;
+            margin-bottom: .16rem;
+            position: relative;
+            perspective: 1000;
+            -webkit-perspective: 1000;
+            -webkit-transition: all 1s ease;
+                -moz-transition: all 1s ease;
+                transition: all 1s ease;
+            .draw_img {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                -webkit-transition: all 1s ease;
+                -moz-transition: all 1s ease;
+                transition: all 1s ease;
+                -moz-backface-visibility: hidden;
+                -ms-backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+            }
+            .normal_img {
+                z-index: 10;
+            }
+            .rotate_img {
+                transform: rotate3d(0, 1, 0, 180deg);
+                -webkit-transform: rotate3d(0, 1, 0, 180deg);
+                -ms-transform: rotate3d(0, 1, 0, 180deg);
+                -moz-transform: rotate3d(0, 1, 0, 180deg);
+                -o-transform: rotate3d(0, 1, 0, 180deg);
+                z-index: 8;
+                background: url(../../../wx/images/spellFragmentsActivity/sp_box.png) no-repeat;
+                background-size: cover;
+            }
+        }
+        .card-flipped .normal_img {
+            transform: rotate3d(0, 1, 0, -180deg);
+            -ms-transform: rotate3d(0, 1, 0, -180deg);
+            /* IE 9 */
+            -moz-transform: rotate3d(0, 1, 0, -180deg);
+            /* Firefox */
+            -webkit-transform: rotate3d(0, 1, 0, -180deg);
+            /* Safari 和 Chrome */
+            -o-transform: rotate3d(0, 1, 0, -180deg);
+            /* Opera */
+            z-index: 8;
+        }
+        .card-flipped .rotate_img {
+            transform: rotate3d(0, 1, 0, 0deg);
+            -ms-transform: rotate3d(0, 1, 0, 0deg);
+            /* IE 9 */
+            -moz-transform: rotate3d(0, 1, 0, 0deg);
+            /* Firefox */
+            -webkit-transform: rotate3d(0, 1, 0, 0deg);
+            /* Safari 和 Chrome */
+            -o-transform: rotate3d(0, 1, 0, 0deg);
+            /* Opera */
+            z-index: 10;
+        }
+        
+        .drawHe{
+            transform: rotate3d(0, 0, 1, 720deg);
+            -ms-transform: rotate3d(0, 0, 1, 720deg);
+            /* IE 9 */
+            -moz-transform: rotate3d(0, 0, 1, 720deg);
+            /* Firefox */
+            -webkit-transform: rotate3d(0, 0, 1, 720deg);
+            /* Safari 和 Chrome */
+            -o-transform: rotate3d(0, 0, 1, 720deg);
+        }
+         
+        
+        li:not(:nth-child(1), :nth-child(4), :nth-child(7)) {
+            margin-left: .15rem;
+        }
+        $normalImg:( url(../../../wx/images/spellFragmentsActivity/img_normal1.png) no-repeat, url(../../../wx/images/spellFragmentsActivity/img_normal2.png) no-repeat, url(../../../wx/images/spellFragmentsActivity/img_normal3.png) no-repeat, url(../../../wx/images/spellFragmentsActivity/img_normal4.png) no-repeat, url(../../../wx/images/spellFragmentsActivity/img_normal5.png) no-repeat, url(../../../wx/images/spellFragmentsActivity/img_normal6.png) no-repeat, url(../../../wx/images/spellFragmentsActivity/img_normal7.png) no-repeat, url(../../../wx/images/spellFragmentsActivity/img_normal8.png) no-repeat, url(../../../wx/images/spellFragmentsActivity/img_normal9.png) no-repeat);
+        @for $i from 1 through 9 {
+            li:nth-child(#{$i}) .normal_img {
+                background: nth($normalImg, $i);
+                background-size: cover;
+            }
+        }
+    }
+}
+
+//数据展示部分样式
+.data_box {
+    dl {
+        height: 100%;
+        width: 50%;
+        float: left;
+        padding-top: .25rem;
+        text-align: center;
+        dt {
+            font-size: .36rem;
+            color: #ff5241;
+        }
+        dd {
+            font-size: .24rem;
+            color: #333;
+        }
+    }
+}
+
+//拼图部分样式
+.spell_box {
+    ul.spell_ul {
+        width: 100%;
+        li.spell_list:not(:nth-child(1), :nth-child(4)) {
+            margin-left: .25rem;
+        }
+        li.spell_list {
+            width: 2rem;
+            float: left;
+            overflow: hidden;
+            margin-bottom: .5rem;
+            .spell_img_box {
+                height: 2.48rem;
+                margin-bottom: .2rem;
+                position: relative;
+            }
+            .spell_text {
+                text-align: center;
+                color: #fff;
+                margin-bottom: .2rem;
+                .spell_name {
+                    font-size: .24rem;
+                }
+                .spell_data {
+                    font-size: .2rem;
+                    span {
+                        color: #ffea75;
+                    }
+                }
+            }
+            .spell_btn {
+                width: 2.02rem;
+                height: 1.06rem;
+                background: url(../../../wx/images/spellFragmentsActivity/conversion1_btn.png) no-repeat;
+                background-size: cover;
+            }
+        }
+    }
+}
+
+.spell_img_box .spell_img_full {
+    width: 100%;
+    height: 100%;
+    background: #ccc;
+    position: absolute;
+    background: url(../../../wx/images/spellFragmentsActivity/sp_box.png) no-repeat;
+    background-size: cover;
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.spell_img_box .spell_xian {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.spell_img_box .spell_xian4,
+.spell_img_box .spell_xian4,
+.spell_img_box .spell_xian4 {
+    background: url(../../../wx/images/spellFragmentsActivity/xian_normal0.png) no-repeat;
+    background-size: cover;
+}
+
+.spell_img_box .spell_xian5 {
+    background: url(../../../wx/images/spellFragmentsActivity/xian_normal1.png) no-repeat;
+    background-size: cover;
+}
+
+.spell_img_box .spell_xian6 {
+    background: url(../../../wx/images/spellFragmentsActivity/xian_normal2.png) no-repeat;
+    background-size: cover;
+}
+
+.spell_img_box .spell_xian7 {
+    background: url(../../../wx/images/spellFragmentsActivity/xian_normal3.png) no-repeat;
+    background-size: cover;
+}
+
+.spell_img_box .spell_img_lump {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    li {
+        position: relative;
+        i {
+            display: block;
+            width: 100%;
+            height: .3rem;
+            font-size: .22rem;
+            color: #e93131;
+            padding: .15rem 0 0 .15rem;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+.spell_img_lump4 ul {
+    width: 100%;
+    height: 100%;
+    li {
+        width: 1rem;
+        height: 1.24rem;
+        float: left;
+    }
+}
+
+.spell_img_lump5 {
+    ul {
+        width: 100%;
+        height: 100%;
+        li {
+            height: 1.24rem;
+            float: left;
+        }
+        li:nth-child(1),
+        li:nth-child(2) {
+            width: 1rem;
+        }
+        li:nth-child(3) {
+            width: .68rem;
+        }
+        li:nth-child(4) {
+            width: .63rem;
+        }
+        li:nth-child(5) {
+            width: .69rem;
+        }
+    }
+}
+
+.spell_img_lump6 {
+    ul {
+        width: 100%;
+        height: 100%;
+        li {
+            height: 1.24rem;
+            float: left;
+        }
+        li:nth-child(1),
+        li:nth-child(4) {
+            width: .68rem;
+        }
+        li:nth-child(2),
+        li:nth-child(5) {
+            width: .63rem;
+        }
+        li:nth-child(3),
+        li:nth-child(6) {
+            width: .69rem;
+        }
+    }
+}
+
+.spell_img_lump7 {
+    ul {
+        width: 100%;
+        height: 100%;
+        li {
+            height: 1.24rem;
+            float: left;
+        }
+        li:nth-child(1) {
+            width: .68rem;
+        }
+        li:nth-child(2) {
+            width: .63rem;
+        }
+        li:nth-child(3) {
+            width: .69rem;
+        }
+        li:nth-child(4) {
+            width: .53rem;
+        }
+        li:nth-child(5) {
+            width: .46rem;
+        }
+        li:nth-child(6) {
+            width: .48rem;
+        }
+        li:nth-child(7) {
+            width: .53rem;
+        }
+    }
+}

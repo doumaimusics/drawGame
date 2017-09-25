@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<meta name="format-detection" content="telephone=no" />
+		<title>十一中秋双节同庆，翻拍赢好礼</title>
+		<link rel="stylesheet" type="text/css" href="${theme_dir}/wx/css/spellFragmentsActivity/spellFragmentsActivity.css" />
+	</head>
+
+	<body>
+		<div class="main_box">
+			<!--头部部分-->
+			<header class="main_top">
+				<ul>
+					<li class="border-r">
+						<p>9.25-9.30</p>
+						<p>中秋大礼包</p>
+					</li>
+					<li class="border-r">
+						<p>10.1-10.4</p>
+						<p>十一大礼包</p>
+					</li>
+					<li>
+						<p>10.5-10.10</p>
+						<p>狂欢大礼包</p>
+					</li>
+				</ul>
+			</header>
+			<!--灯笼-->
+			<section class="light_box">
+				
+			</section>	
+			<!--活动标题部分-->
+			<section class="title_img"></section>
+			<!--翻牌部分-->
+			<section class="draw_box">
+				<ul class="clearfix"></ul>
+
+			</section>
+			<!--投资数据显示部分-->
+			<section class="data_box">
+				<dl>
+					<dt id="add_up">0</dt>
+					<dd>累积年化投资额</dd>
+				</dl>
+				<dl>
+					<dt id="residue">0</dt>
+					<dd>剩余年化投资额</dd>
+				</dl>
+			</section>
+			<!--标注-->
+			<section class="hint_box">
+				<p>注：年化投资额每增加1000就可以获得一次翻牌机会</p>
+			</section>
+			<!--拼图部分-->
+			<section class="spell_box">
+				<ul class="spell_ul clearfix"></ul>
+			</section>
+			<!--注意部分-->
+			<section class="redeem_tx">
+				<p>注：获得实物商品用户，客服会在活动结束后（10月10日）三个工作日内确认订单后进行商品的发放。</p>
+			</section>
+			<!--活动规则部分-->
+			<section class="rule_box">
+				<p>1.客户年化投资额累计到1000就可以获得一次翻牌机会，按投资标的年化额度计算公式进行累计（新手标不参与此活动）;</p>
+				<p>天标算法 年化投资额=投资金额÷360×投资天数</p>
+				<p>月标算法 年化投资额=投资金额÷12×投资月数</p>
+				<p>2.客户集齐商品碎片就可以获得相应的商品奖励，加息券等虚拟物品由系统发放到用户账户，获得实物商品用户，客服会在活动结束后（10月10日）三个工作日内确认订单后进行商品的发放;</p>
+				<p>3.用户获得碎片，请在每个大礼包有效时间内集齐碎片。若超时，未成功兑换的碎片将自动作废;</p>
+				<p>4.奖品价值不同会产生不同的碎片数量，奖品分割的碎片固定，每个奖品的碎片量详细的奖品碎片详见活动内容页面;</p>
+				<p>本活动归E都市钱包所有。</p>
+			</section>
+			<!--底部-->
+			<section class="footer_box">
+				<p>本活动最终解释权归E都市钱包所有</p>
+				<p>欢迎致电客服：4001353388 | 微信公众号：E都市钱包</p>
+			</section>
+			<!--弹框-->
+			<section class="pop_up_box">
+				<div class="close_btn"></div>
+				<div class="pop_img"></div>
+				<p></p>
+				<div class="pop_btn"></div>
+			</section>
+			<!--遮罩-->
+			<section class="mark_box"></section>
+		</div>
+		<input type="hidden" value="${uid!}" id="userIdHidden" />
+	</body>
+
+</html>
+<script type="text/javascript" src="../../../../js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="${theme_dir}/wx/plugin/layer-mobile/layer.m.js"></script>
+<script>
+	$(function() {
+
+	var activityType = 1;
+
+	var spellNmae = null;
+	
+	var look = false;
+
+	function toLogin() { //去登录
+		if(osType) {
+			PassValue("LG");
+		} else {
+			window.location.href = "login.html";
+		}
+	}
+
+	function toInvest() { //去投资
+		if(osType) {
+			PassValue("WIP");
+		} else {
+			window.location.href = "invest.html";
+		}
+	}
+
+	function layer_btns(str, btn1, btn2, fn1, fn2) { // 弹框内容（俩按钮）
+		mobile_layer.open({
+			title: '温馨提示',
+			content: str,
+			shadeClose: false,
+			style: 'width:90%;',
+			btn: [btn1, btn2],
+			yes: fn1
+		})
+		$('.layermend').hide().siblings('h3').css({
+			padding: 0,
+			border: 0
+		})
+		$('.layermcont').css({
+			color: '#a2a2a2',
+			padding: '0 10px 20px'
+		})
+	}
+
+	function toMoney(num) { //将数字转换成钱数
+		num = num.toFixed(2);
+		num = parseFloat(num);
+		num = num.toLocaleString();
+		return num; //返回的是字符串23,245.12保留2位小数
+	}
+
+	function mixArray(source) { //随机取九张图片封装
+		var goal = [];
+		for(var i = 0; i < source.length; i++) {
+			var pos = Math.floor(Math.random() * (source.length - i));
+			goal[i] = source[pos];
+			source[pos] = source[source.length - 1 - i]
+		}
+		return goal;
+	}
+
+	function isTimeSlot(start, end) { //到时间刷新更换函数封装
+		
+		var getYear = new Date().getFullYear();
+		
+		var startFullTime = (getYear + '/') + start;
+		
+		var endFullTime = (getYear + '/') + end;
+		
+		var today = new Date().getTime();
+		
+		var startTime = new Date(startFullTime).getTime()
+		
+		var endTime = new Date(endFullTime).getTime()
+		
+		if((today >= startTime) && (today <= endTime)) {
+		    return true;
+		}
+		return false;
+	}
+
+	function getQueryString(name) { /*获取url后面的数据*/
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+		var r = window.location.search.substr(1).match(reg);
+		if(r != null) return unescape(r[2]);
+		return null;
+	}
+
+	function PassValue(e) { /*调用原生底层*/
+		var u = navigator.userAgent;
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;
+		var isIos = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+		if(isAndroid) {
+			Android.getGoodsInfoFromJs(e);
+		} else if(isIos) {
+			passValue(e);
+		}
+	}
+
+	function investment() { //投资金额的接口
+		var iurl = '/activity/moonAmount.html?userId=' + userId;
+		$.ajax({
+			url: iurl,
+			type: 'get',
+			dataType: 'json',
+			cache: false,
+			success: function(data) {
+				var totalAmount = toMoney(data.totalAmount);
+				var remainAmount = toMoney(data.remainAmount);
+				$('#add_up').text(totalAmount + '元');
+				$('#residue').text(remainAmount + '元');
+			}
+		})
+	}
+
+	function setSudoku() { //创建九宫格
+		var str = '';
+		for(var x = 0; x < 9; x++) { //创建九宫格
+			str += '<li><div class="draw_img normal_img"></div><div class="draw_img rotate_img"><img src=""></div></li>'
+		}
+		$('.draw_box ul').append(str);
+	}
+
+	function setDebris() { //z创建展示碎片的6个区域
+		var str1 = '';
+		var spellQuan1 = [];
+		for(var i = 1; i < 7; i++) {
+			spellQuan1.push('${theme_dir}/wx/images/spellFragmentsActivity/xian4/activity' + activityType + '/activitq' + activityType + '-' + i + '.png');
+		}
+
+		for(var i = 0; i < spellQuan1.length; i++) {
+			str1 += '<li class="spell_list"><div class="spell_img_box"><div class="spell_img_full"><img src="' + spellQuan1[i] + '"></div><div class="spell_img_lump"><ul></ul></div><div class="spell_xian"></div></div><div class="spell_text"><p class="spell_name">' + spellNmae[i] + '</p><p class="spell_data">(已集成<span>' + 0 + '</span>/4)</p></div><div class="spell_btn">已集齐<span>0</span>个</div></li>'
+		}
+
+		$('.spell_box ul').append(str1);
+
+		for(var i = 1; i < 5; i++) {
+			$('<li></li>')
+				.addClass('nth_child')
+				.addClass('nth_child' + i)
+				.appendTo('.spell_img_lump ul')
+			var nth_child = $('.nth_child').length;
+			for(var j = 0; j < nth_child; j++) {
+				$('.nth_child')[j].setAttribute('id', 'chip' + '_' + j);
+			}
+		}
+
+	}
+
+	function logIn() {//判断是否登录
+		if(userId == '' || userId == 0 || userId == null || userId == undefined) { /*判断是否登录*/
+			userId = null;
+			$('.draw_box li').click(function() {
+				layer_btns("快去登录,参加活动哦 ！", "去登录", "取消", toLogin);
+			})
+		} else {
+			drawShow()
+			investment() //投资金额接口
+			debrisList() //碎片列表接口
+		}
+	}
+
+	/*查看是不是APP传来的参数*/
+	var osType = getQueryString("osType");
+	/*给userId赋值*/
+	var userId = osType ? getQueryString("uid") : $("#userIdHidden").val();
+
+	// 主逻辑入口  不同时间的活动
+	if(isTimeSlot("09/25 00:00:00", "09/30 23:59:59")) {
+		$('.main_top li:nth-child(1)').addClass('activeColor');
+		activityType = 1;
+		spellNmae = ["现金奖励100元", "加息券3%", "钱宝宝吉祥物88元", "蛋黄酥158元", "知味观月饼288元", "格兰仕烤箱399元"]
+		setSudoku();
+		setDebris();
+		logIn();
+	} else if(isTimeSlot("10/01 00:00:00", "10/04 23:59:59")) {
+		$('.main_top li:nth-child(1)').removeClass('activeColor');
+		$('.main_top li:nth-child(2)').addClass('activeColor');
+		activityType = 2;
+		spellNmae = ["加息券3%", "钱宝宝吉祥物88元", "小米移动电源", "猫眼电影劵100元", "百草味礼盒288元", "旅游基金400元  "]
+		setSudoku();
+		setDebris();
+		logIn();
+	} else if(isTimeSlot("10/05 00:00:00", "10/10 23:59:59")) {
+		$('.main_top li:nth-child(1)').removeClass('activeColor');
+		$('.main_top li:nth-child(2)').removeClass('activeColor');
+		$('.main_top li:nth-child(3)').addClass('activeColor');
+		activityType = 3;
+		spellNmae = ["加息券3%", "现金红包100元", "钱宝宝吉祥物88元", "小米音响129元", "脚底按摩器219元 ", "大闸蟹礼盒338元"]
+		setSudoku();
+		setDebris();
+		logIn();
+	} else if(isTimeSlot("10/11 00:00:00", "12/31 23:59:59")){
+		$('.mark_box').show();
+		$('.pop_up_box').show().css({
+			"fontSize":'.4rem',
+			"color":"#F7320F",
+			"textAlign":"center",
+			"paddingTop":"2rem",
+		}).html('此活动已结束<br/>请参加平台其他奖励活动!');
+	}
+
+	function drawShow() { //点击翻牌动画		
+
+		$('.draw_box li').click(function() { //点击九宫格的动画
+			var $index = $(this).index();
+			lottery($index);
+		});
+
+	}
+	
+	function lottery(liIndex) { //抽奖接口
+		var iurl = '/activity/moonLuckDraw.html?userId=' + userId + '&type=' + activityType;
+		$.ajax({
+			url: iurl,
+			type: 'get',
+			dataType: 'json',
+			cache: false,
+			success: function(data) {
+				var res = data.resCode;
+				if(res == 0) {
+					layer_btns(data.resMsg, "去投资", "取消", toInvest);
+				} else {
+					var imgUrl = '${theme_dir}/wx/images/spellFragmentsActivity/xian4/activity' + activityType + '/activit' + activityType + '-' + data.order + '.png';
+					$('.draw_box li')
+						.eq(liIndex)
+						.find('.rotate_img img')[0]
+						.setAttribute('src', imgUrl);
+
+					if(look) {
+						return;
+					}
+					look = true;
+					$(this).addClass('card-flipped'); //点击的这样反转
+
+					timer1 = setTimeout(function() { //全部反转
+						$('.draw_box li').addClass('card-flipped');
+					}, 500);
+					//九宫格第一个活动24张碎片图片
+					var derusImg1 = [];
+					for(var i = 1; i < 24; i++) {
+						derusImg1.push('${theme_dir}/wx/images/spellFragmentsActivity/xian4/activity' + activityType + '/activit' + activityType + '-' + i + '.png')
+					}
+					var Ro = [];
+					for(var j = 0; j < derusImg1.length; j++) { //随机取九张碎片
+						Ro[j] = j;
+					}
+					Ro = mixArray(Ro);
+					for(var x = 0; x < 9; x++) { //随机取九张碎片
+						if(x != liIndex) {
+							$('.draw_box li .rotate_img img')[x].setAttribute('src', derusImg1[Ro[x]]);
+						}
+					}
+
+					timer2 = setTimeout(function() {
+						$('.pop_up_box,.mark_box').fadeIn();
+						$('.pop_up_box').find('.pop_img').html('<img src="' + imgUrl + '" />');
+						$('.pop_up_box p').html("恭喜您,获得" + data.name + "碎片")
+						$('.pop_up_box .pop_btn,.pop_up_box .close_btn,.mark_box').one('click', function() {
+							$('.draw_box li').removeClass('card-flipped');
+							$('.pop_up_box,.mark_box').hide();
+							timer3 = setTimeout(function() {
+								$('.draw_box').addClass('drawHB');
+							}, 500)
+							timer4 = setTimeout(function() {
+								$('.draw_box ul').addClass('drawHe');
+							}, 1000)
+							timer5 = setTimeout(function() {
+								$('.draw_box').removeClass('drawHB');
+								$('.draw_box ul').removeClass('drawHe');
+								setTimeout(function() {
+									look = false;
+								}, 500);
+								window.location.reload();
+							}, 1500)
+						})
+
+					}, 1000)
+				}
+
+			}
+
+		})
+
+	}
+
+	function debrisList() { //碎片列表接口
+
+		var iurl = '/activity/moonFragmentList.html?userId=' + userId + '&type=' + activityType;
+		$.ajax({
+			url: iurl,
+			type: 'get',
+			dataType: 'json',
+			cache: false,
+			success: function(data) {
+
+				// 24个碎片位置的记录
+				var spOrder = 1;
+
+				// 遍历6个商品
+				for(var i = 0; i < data.fragment.length; i++) {
+
+					// 展示已经集成的数量
+					$('.spell_ul > li').eq(i).find('.spell_btn span').html(data.fragment[i].collection);
+
+					// 当前碎片的个数
+					var countAready = 0;
+
+					// 遍历4个小碎片
+					for(var j = 0; j < data.fragment[i].list.length; j++) {
+						// 碎片抽奖次数的记录
+						var list = data.fragment[i].list;
+
+						// 如果碎片记录数为0，则用户没有抽中过此碎片
+						if(list[j] != 0) {
+
+							// 根据碎片位置获取对应的图片
+							var myImgUrl = '${theme_dir}/wx/images/spellFragmentsActivity/xian4/activity' + activityType + '/activit' + activityType + '-' + spOrder + '.png';
+
+							// 根据碎片位置获取ID标签
+							var choose = '#chip_' + (spOrder - 1);
+
+							// 根据ID标签在碎片位置展示图片和抽中该碎片的次数
+							$(choose).html('<i>' + list[j] + '</i><img src="' + myImgUrl + '" />');
+
+							// 统计当前碎片的个数，加1
+							countAready = countAready + 1;
+						}
+
+						// 记录碎片位置，加1
+						spOrder = spOrder + 1;
+					}
+
+					// 展示当前商品已经有的碎片个数
+					$('.spell_ul > li').eq(i).find('.spell_text .spell_data span').html(countAready);
+				}
+
+			}
+		})
+	}
+	})
+</script>

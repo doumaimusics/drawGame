@@ -1,0 +1,3 @@
+index.html文件是本地页面效果  没有加数据交互但是可以看效果
+spellFragmentsActivity.html文件是线上页面  有数据交互但是看不到效果  所有的与后台交互的逻辑代码有在此文件里
+demand.zip文件是需求文档
